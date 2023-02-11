@@ -8,12 +8,12 @@ an executable
 ]]
 -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
 
--- Andrea testing function
-vim.api.nvim_create_user_command('Andrea',
-  function(opts)
-    print(string.upper(opts.fargs[1]))
-  end,
-  { nargs = 1 })
+-- Andrea testing function to add a comand
+-- vim.api.nvim_create_user_command('Andrea',
+  -- function(opts)
+  --   print(string.upper(opts.fargs[1]))
+  -- end,
+  -- { nargs = 1 })
 
 
 -- general
@@ -152,7 +152,8 @@ lvim.builtin.treesitter.highlight.enable = true
 --   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- end
 
--- set a formatter, this will override the language server formatting capabilities (if it exists)
+-- Prettier and other formatters. 
+-- Set a formatter, this will override the language server formatting capabilities (if it exists)
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   -- { command = "black", filetypes = { "python" } },
@@ -188,10 +189,6 @@ formatters.setup {
 
 -- Additional Plugins
 lvim.plugins = {
-  -- {
-  --    "folke/trouble.nvim",
-  --    cmd = "TroubleToggle",
-  -- },
   {
     "mattn/emmet-vim"
   }
@@ -199,7 +196,6 @@ lvim.plugins = {
 
 
 -- Emmet
-
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- vim.api.nvim_create_autocmd("BufEnter", {
@@ -215,6 +211,7 @@ lvim.plugins = {
 --   end,
 -- })
 
+-- Format js/ts when exiting insert mode
 vim.api.nvim_create_autocmd("InsertLeave", {
   pattern = { "*.js", "*.ts" },
   -- command = ":FZF",
