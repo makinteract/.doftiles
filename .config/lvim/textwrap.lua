@@ -1,4 +1,6 @@
 -- Wrapping text
+
+-- Main function for toggling the text wrapper
 vim.g.wrap = false
 vim.api.nvim_create_user_command('ToggleWrap',
   function()
@@ -31,10 +33,12 @@ vim.api.nvim_create_user_command('ToggleWrap',
   { nargs = 0 })
 
 
+-- Autoactivate it in soe files
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = { "*.txt", "*.md", "*.json", ".jsonc" },
   -- enable wrap mode for selected files only
   command = "ToggleWrap",
 })
 
+-- Which-key addition to category 'u' (User)
 lvim.builtin.which_key.mappings['u'].w = {'<cmd>ToggleWrap<cr>', 'Toggle Wrap'}
