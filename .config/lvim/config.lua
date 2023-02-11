@@ -22,7 +22,7 @@ lvim.format_on_save.enabled = false
 lvim.colorscheme = "lunar"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
-vim.opt.timeoutlen = 100
+vim.opt.timeoutlen = 500
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
@@ -71,7 +71,7 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- }
 
 -- Custom commands
-lvim.builtin.which_key.mappings["."] = { "<cmd>:FZF ~<cr>", "Search" }
+lvim.builtin.which_key.mappings["."] = { "<cmd>Files ~<cr>", "Search" }
 lvim.builtin.which_key.mappings["u"] = {
   name = "+User",
   s = {
@@ -190,26 +190,32 @@ formatters.setup {
 -- Additional Plugins
 lvim.plugins = {
   {
-    "mattn/emmet-vim"
+    "mattn/emmet-vim",
+  },
+  {
+    'ggandor/leap.nvim',
+    config = function()
+      require('leap').add_default_mappings()
+    end
+  },
+  {
+    "junegunn/fzf.vim"
   }
 }
 
 
 -- Emmet
 
--- Autocommands (https://neovim.io/doc/user/autocmd.html)
--- vim.api.nvim_create_autocmd("BufEnter", {
---   pattern = { "*.json", "*.jsonc" },
---   -- enable wrap mode for json files only
---   command = "setlocal wrap",
--- })
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = "zsh",
---   callback = function()
---     -- let treesitter use bash highlight for zsh files as well
---     require("nvim-treesitter.highlight").attach(0, "bash")
---   end,
--- })
+vim.g.user_emmet_install_global = 0
+vim.g.user_emmet_leader_key=','
+vim.g.user_emmet_mode='a'
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = { "*.css", "*.html" },
+  -- enable wrap mode for json files only
+  command = "EmmetInstall",
+})
+
 
 -- Format js/ts when exiting insert mode
 vim.api.nvim_create_autocmd("InsertLeave", {
@@ -224,10 +230,15 @@ vim.api.nvim_create_autocmd("InsertLeave", {
 -- Adding util to create and delete a scratch buffer
 lvim.builtin.which_key.mappings['b'].s = {'<cmd>enew<cr>', 'Scratch'}
 lvim.builtin.which_key.mappings['b'].k = {'<cmd>bd<cr>', 'Kill buffer'}
+lvim.builtin.which_key.mappings['b'].K = {'<cmd>bd!<cr>', 'Kill buffer-no save'}
 
 
 -- Wrapping in text mode
-require ('textwrap')
+dofile(os.getenv("HOME") .. "/.config/lvim/textwrap.lua")
+-- local currentDir = vim.fn.expand('%:p:h');
+-- dofile (currentDir .. "/textwrap.lua")
+
+
 
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.md", "*.txt" },
@@ -238,4 +249,19 @@ require ('textwrap')
 -- --   -- enable wrap mode for json files only
 -- --   command = "setlocal wrap",
 -- -- })
+-- })
+
+
+-- Autocommands (https://neovim.io/doc/user/autocmd.html)
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--   pattern = { "*.json", "*.jsonc" },
+--   -- enable wrap mode for json files only
+--   command = "setlocal wrap",
+-- })
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "zsh",
+--   callback = function()
+--     -- let treesitter use bash highlight for zsh files as well
+--     require("nvim-treesitter.highlight").attach(0, "bash")
+--   end,
 -- })
