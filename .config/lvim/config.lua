@@ -200,6 +200,9 @@ lvim.plugins = {
   },
   {
     "junegunn/fzf.vim"
+  },
+  {
+    "junegunn/fzf"
   }
 }
 
